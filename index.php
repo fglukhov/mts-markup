@@ -38,7 +38,7 @@
 
   <!-- Top content -->
 
-  <div class="top-content">
+  <div id="top-content">
     
     <!-- Header -->
     
@@ -251,7 +251,7 @@
 
 <!-- Footer -->
 
-<div class="footer">
+<div id="footer">
 
   <div class="section-wrapper">
     <div class="footer-content">
@@ -270,7 +270,7 @@
 </div>
 
 <!-- Footer END -->
-  
+
 </body>
 
 

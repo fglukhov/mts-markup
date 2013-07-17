@@ -158,7 +158,7 @@
         } else {
           listerItems.eq(0).click();
         }
-      }, 10000);
+      }, 1000000);
       
       listerItems.on("click",function () {
         slides.find(".slide-content").hide();
@@ -311,6 +311,9 @@ function mapInit () {
     behaviors: ['default', 'scrollZoom']
   });
   
+  // Метка
+
+  
   // Геолокация
   
   var geoLocationOptions = {
@@ -380,11 +383,16 @@ function mapInit () {
     
     addMarkers();
     
+    myMap.Update();
+    
+    
   }
   
   function geoError(err) {
     console.warn('ERROR(' + err.code + '): ' + err.message);
-    myMap.setCenter([63.369315, 105.440191]);
+    myMap.setCenter([55.752198, 37.622478]);
+    myMap.setZoom(11);
+    myMap.Update();
   };
   
   if (navigator.geolocation) {
@@ -467,7 +475,13 @@ function mapInit () {
             myPlacemark = new ymaps.Placemark(coordinates, {
               // Чтобы балун и хинт открывались на метке, необходимо задать ей определенные свойства.
               balloonContentBody: stores[i].address,
-              balloonContentFooter: stores[i].openingHours
+              balloonContentFooter: stores[i].openingHours},{
+              iconImageHref: '../images/map-pin.png',
+              // Размеры метки.
+              iconImageSize: [24, 40],
+              // Смещение левого верхнего угла иконки относительно
+              // её "ножки" (точки привязки).
+              iconImageOffset: [-12, -40]
             });
             placemarks.push(myPlacemark);
           }
@@ -528,7 +542,6 @@ function mapInit () {
   
   
   
-  
 }
 
 jQuery.extend({
@@ -578,17 +591,38 @@ function sliderAnimation(slideNum) {
     var coins = $("#slider-coins");
     
     var t01 = setTimeout(function() {
-      box.css("left",656).css("top",49).show().stop().animate({
-        left: 546
-      },1000);
+    
+    
+      box.css("left",640).css("top",44).show().stop().animate({
+        left: 546,
+        top: 49
+      },450);
+      
+      $({deg: 20}).animate({deg: 0}, {
+         duration: 450,
+         step: function(now){
+           box.css({
+             transform: "rotate(" + now + "deg)"
+           });
+         }
+      });
       
     },1500);
     
     var t02 = setTimeout(function() {
-      coins.css("left",545).css("top",311).css("height",0).show().stop().animate({
-        height: 166,
-        top: 145
-      },700);
+      coins.css("width",90).css("height",50).css("left",580).css("top",146).css("z-index",1).show().animate({
+        width:180,
+        height:100,
+        left:420
+      },800,function() {
+        coins.css("z-index",4);
+        coins.animate({
+          width: 299,
+          height: 166,
+          left: 546
+        },800);
+      });
+      
     },2500);
     //545, 145
     
@@ -693,6 +727,8 @@ function sliderAnimation(slideNum) {
     var phone = $("#slider-phone");
     var paypass = $("#slider-paypass");
     
+    //
+    
     var t31 = setTimeout(function() {
       phone.css("left",613).css("top",165).css("width",10).css("height",10).show().stop().animate({
         width:141,
@@ -711,16 +747,15 @@ function sliderAnimation(slideNum) {
         height:162,
         left:655,
         top:131
-      },500);
+      },500,function() {
+        $("#slider-lamps").show();
+      });
       
       /*543,-3*/
       
     },1500);
     
     var lamp = $("#slider-lamps img");
-    
-      
-      $("#slider-lamps").stop().show(2000,function() {
         
         if ($("#slider-lamps").hasClass("active")) {
           t33.restart();
@@ -748,7 +783,6 @@ function sliderAnimation(slideNum) {
           }, 2500);
         }
       
-      });
     
     
     
@@ -770,3 +804,20 @@ function sliderAnimation(slideNum) {
   }
   
 }
+
+$.fn.animateRotate = function(angle, duration, easing, complete){
+    return this.each(function(){
+        var elem = $(this);
+
+        $({deg: 0}).animate({deg: angle}, {
+            duration: duration,
+            easing: easing,
+            step: function(now){
+                elem.css({
+                    transform: "rotate(" + now + "deg)"
+                });
+            },
+            complete: complete || $.noop
+        });
+    });
+};
