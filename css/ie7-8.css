@@ -1,0 +1,117 @@
+﻿.main-rnd-block .cont-wrapper {
+  position:relative;
+  background-color:#1e2326;
+  behavior: url(/PIE.htc);
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  padding:4px 3px 3px 3px;
+  overflow:hidden;
+}
+
+.main-rnd-block .cont {
+  position:relative;
+  background-color:#252a2e;
+  behavior: url(/PIE.htc);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-box-shadow:0 0 4px 2px #252a2e;
+  -moz-box-shadow:0 0 4px 2px #252a2e;
+  box-shadow:0 0 4px 2px #252a2e;
+}
+
+.main-projects .cont-wrapper {
+  width:174px;
+  height:auto;
+}
+
+.main-projects .cont {
+  width:154px;
+  height:322px;
+  padding:9px 10px 10px 10px;
+}
+
+.main-projects .item:hover .cont {
+  left:-180px;
+}
+
+.main-projects .item:hover .cont .pic,
+.main-projects .item:hover .cont .descr,
+.main-projects .item:hover .cont .params {
+  left:180px;
+}
+
+.rnd-block .cont-wrapper {
+  position:relative;
+  background-color:#dcddde;
+  behavior: url(/PIE.htc);
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  padding:5px 4px 4px 4px;
+  overflow:hidden;
+}
+
+.rnd-block .cont {
+  position:relative;
+  background-color:#f1f2f3;
+  behavior: url(/PIE.htc);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-box-shadow:0 -1px 5px #f1f2f3;
+  -moz-box-shadow:0 -1px 5px #f1f2f3;
+  box-shadow:0 1px 4px 4px #f1f2f3;
+  padding:11px 16px 12px 16px;
+}
+
+.cv-popup .cont {
+  min-height:212px;
+}
+
+.materials span {
+  *display:inline-block;
+  *float:left;
+}
+
+.catalogue-thumbs .pic {
+  *display:block;
+  *float:left;
+}
+
+.catalogue-thumbs .name {
+  *display:block;
+  *float:left;
+  *padding-top:12px;
+  *height:71px;
+}
+
+.docs-list .item .pic {
+  *display:block;
+  *text-align:center;
+  *padding-top:10px;
+}
+
+.catalogue-types .item {
+  *display:block;
+}
+
+.catalogue-types .pic {
+  *display:block;
+  *float:left;
+}
+
+.catalogue-types .descr {
+  *display:block;
+  *float:left;
+}
+
+.partners-list .pic {
+  *display:block;
+}
+
+.partners-list .pic .pic-cont {
+  *display:block;
+  padding-top:20px;
+}
