@@ -158,7 +158,7 @@ $(document).ready(function () {
         } else {
           listerItems.eq(0).click();
         }
-      }, 1000000);
+      }, 10000);
       
       listerItems.on("click",function () {
         slides.find(".slide-content").hide();
@@ -380,6 +380,7 @@ function mapInit () {
     });
     
     myMap.setCenter([closestLat, closestLng],13);
+    myMap.container.fitToViewport();
     
     addMarkers();
     
@@ -388,6 +389,7 @@ function mapInit () {
   function geoError(err) {
     //console.warn('ERROR(' + err.code + '): ' + err.message);
     myMap.setCenter([55.752198, 37.622478],11);
+    myMap.container.fitToViewport()
   };
   
   if (navigator.geolocation) {
@@ -404,6 +406,7 @@ function mapInit () {
         findNearest(coords);
       } else {
         myMap.setCenter([55.752198, 37.622478],11);
+        myMap.container.fitToViewport()
       }
       //this.handleGeolocationError('Ваш броузер не поддерживает GeolocationAPI.');
       //myMap.setCenter([63.369315, 105.440191]);
@@ -555,6 +558,7 @@ function mapInit () {
       var searchLng = firstGeoObject.geometry._ti[1];
       
       myMap.setCenter([searchLat, searchLng],11);
+      myMap.container.fitToViewport()
       
       removeMarkers();
       
