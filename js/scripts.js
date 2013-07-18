@@ -379,7 +379,7 @@ function mapInit () {
       }
     });
     
-    myMap.setCenter([closestLat, closestLng]);
+    myMap.setCenter([closestLat, closestLng],13);
     
     addMarkers();
     
@@ -387,8 +387,7 @@ function mapInit () {
   
   function geoError(err) {
     console.warn('ERROR(' + err.code + '): ' + err.message);
-    myMap.setCenter([55.752198, 37.622478]);
-    myMap.setZoom(11);
+    myMap.setCenter([55.752198, 37.622478],11);
   };
   
   if (navigator.geolocation) {
@@ -551,7 +550,7 @@ function mapInit () {
       var searchLat = firstGeoObject.geometry._ti[0];
       var searchLng = firstGeoObject.geometry._ti[1];
       
-      myMap.setCenter([searchLat, searchLng]);
+      myMap.setCenter([searchLat, searchLng],11);
       
       removeMarkers();
       
