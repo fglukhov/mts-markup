@@ -383,16 +383,12 @@ function mapInit () {
     
     addMarkers();
     
-    myMap.Update();
-    
-    
   }
   
   function geoError(err) {
     console.warn('ERROR(' + err.code + '): ' + err.message);
     myMap.setCenter([55.752198, 37.622478]);
     myMap.setZoom(11);
-    myMap.Update();
   };
   
   if (navigator.geolocation) {
@@ -540,6 +536,51 @@ function mapInit () {
       collection.removeAll();
   }
   
+  $(document).on('submit','#searchForm',function(e) {
+    var searchRequest = $("#searchInput").val();
+    
+    ymaps.geocode(searchRequest, { results: 1 }).then(function (res) {
+      // Выбираем первый результат геокодирования.
+      var firstGeoObject = res.geoObjects.get(0);
+      
+      if (!firstGeoObject) {
+        alert('error')
+      }
+      
+      
+      var searchLat = firstGeoObject.geometry._ti[0];
+      var searchLng = firstGeoObject.geometry._ti[1];
+      
+      myMap.setCenter([searchLat, searchLng]);
+      
+      removeMarkers();
+      
+      var searchCoords = {
+        "latitude": searchLat,
+        "longitude": searchLng
+      };
+      
+      findNearest(searchCoords);
+      
+      
+    }, function (err) {
+        // Если геокодирование не удалось, сообщаем об ошибке.
+        alert('error')
+        
+    });
+    return false;
+  });
+  
+  $(".map-search #sample").click(function() {
+    $("#searchInput").val($(this).find("address").html());
+    $("#searchForm").submit();
+  });
+  
+  $("#searchForm").on("submit",function() {
+    if (!$("#searchInput").val()) {
+      $("#searchInput").blur();
+    }
+  });
   
   
 }
