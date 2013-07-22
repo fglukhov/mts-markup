@@ -158,7 +158,7 @@ $(document).ready(function () {
         } else {
           listerItems.eq(0).click();
         }
-      }, 1000000);
+      }, 10000);
       
       listerItems.on("click",function () {
         slides.find(".slide-content").hide();
