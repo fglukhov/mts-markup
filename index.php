@@ -14,8 +14,8 @@
 <![endif]-->
 <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="js/jquery.uniform.js"></script>
-<script type="text/javascript" src="js/fancybox/jquery.fancybox.js"></script>
-<link rel="stylesheet" type="text/css" href="js/fancybox/jquery.fancybox.css" media="screen" />
+<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+<script type="text/javascript" src="js/jquery.transit.min.js"></script>
 <script src="//api-maps.yandex.ru/2.0/?load=package.standard,package.clusters&lang=ru-RU" type="text/javascript"></script>
 
 <script type="text/javascript" src="js/text-shadow.min.js"></script>
