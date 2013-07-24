@@ -230,7 +230,7 @@
             <div class="search-form common-form">
               <form id="searchForm">
                 <div class="form-item">
-                	<input type="text" name="searchInput" id="searchInput" class="form-text" required />
+                	<input type="text" name="searchInput" id="searchInput" class="form-text" autocomplete="off" required />
                 </div>
                 <div id="sample"><span>Пример: <address>город Москва, ул. Серафимовича</address></span></div>
                 <input type="submit" value="Поиск" class="form-submit"/>

@@ -370,7 +370,7 @@ h3 {
   float:right;
   color:#fff;
   font-size:18px;
-  font-family:'FreeSetDemi', sans-serif;
+  font-family:'FreeSet', sans-serif;
   cursor:pointer;
   margin-top:13px;
   position:relative;
@@ -397,7 +397,7 @@ h3 {
   float:right;
   color:#fff;
   font-size:18px;
-  font-family:'FreeSetDemi', sans-serif;
+  font-family:'FreeSet', sans-serif;
   cursor:pointer;
   margin-top:13px;
 }
@@ -438,6 +438,33 @@ h3 {
   background:url(../images/map-frame.png) 0 0 no-repeat;
   float:left;
   margin:0 72px 0 0;
+}
+
+.autocomplete {
+  background-color:#FFF;
+  text-transform:none;
+  color:#1fa2b2;
+  font-size:12px;
+  border:1px solid #999;
+  border-top:none;
+  position:absolute;
+  z-index:50;
+  padding:5px 6px;
+  font-family:Arial, sans-serif;
+}
+
+.autocomplete li {
+  margin:0 0 .5em 0;
+  padding:2px 4px;
+}
+
+.autocomplete span {
+  text-decoration:underline;
+  cursor:pointer;
+}
+
+.autocomplete li.act {
+  background-color:#dedede;
 }
 
 #map {
@@ -592,3 +619,31 @@ h3 {
   overflow:hidden;
 }
 
+/* Map balloon */
+
+.ymaps-b-balloon {
+  width:300px !important;
+}
+
+.ymaps-b-balloon__content {
+  width:298px !important;
+}
+
+
+.ymaps-b-balloon__content ymaps {
+  width:298px !important;
+  overflow:visible !important;
+}
+
+.balloon-top {
+  padding:10px;
+}
+
+.balloon-bottom {
+  padding:6px 10px;
+  background:url(../images/balloon-footer.png) 0 bottom no-repeat;
+  color:#fff;
+  margin-bottom:-10px;
+  position:relative;
+  z-index:500;
+}

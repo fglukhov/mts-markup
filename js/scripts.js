@@ -4,6 +4,10 @@ $(window).load(function(){
   });
 });
 
+$(window).resize(function() {
+  $(".autocomplete").css("left",$("#searchInput").offset().left).css("top",$("#searchInput").offset().top + 31);
+});
+
 $(document).ready(function () {
   
   // $(".form-wrapper").hide();
@@ -18,8 +22,6 @@ $(document).ready(function () {
   if ($(".request-form label span").length) {
     $(".request-form label span").textShadow('1px 1px #005568');
   }
-  
-  
   
   $("input:submit").each(function () {
     var divBtn = $("<div></div>");
@@ -40,7 +42,7 @@ $(document).ready(function () {
   $("input:text").each(function () {
     $(this).wrap("<div class='input-wrapper'></div>");
   });
-
+  
   // Валидация формы заявки
   
   var validator = $("#requestForm").bind("invalid-form.validate", function() {
@@ -255,7 +257,7 @@ $(document).ready(function () {
   
     card.css("left",500 + slider.width() - card.width()).show().transition({
       left:649
-    },1500);
+    },1000);
     
     var slideTtl = slider.find("h2");
     
@@ -263,7 +265,7 @@ $(document).ready(function () {
     
     slideTtl.transition({
       left:0
-    },1600);
+    },1200);
     
   }
   
@@ -343,7 +345,7 @@ function mapInit () {
     //myMap.setCenter([crd.latitude, crd.longitude]);
 
     findNearest(crd);
-    
+        
     //addMarkers();
     
   };
@@ -376,8 +378,8 @@ function mapInit () {
     closestLat = closestCoords[0];
     closestLng = closestCoords[1];
     var nearestAddress = stores[minIndex].address.substring(stores[minIndex].address.indexOf(', ')+2, stores[minIndex].address.length);
-    $("#nearestAddress").html(nearestAddress);
-    $("#sample address").text(nearestAddress);
+    $("#nearestAddress").html(nearestAddress.replace(" г,",","));
+    $("#sample address").text(nearestAddress.replace(" г,",","));
     
     
     $(".map-search span").each(function() {
@@ -389,6 +391,8 @@ function mapInit () {
     
     myMap.setCenter([closestLat, closestLng],13);
     myMap.container.fitToViewport();
+    
+    
     
     addMarkers();
     
@@ -474,6 +478,25 @@ function mapInit () {
   function createGeoObjects (number, bounds) {
       
       var placemarks = [];
+      
+      var MyBalloonContentLayoutClass = ymaps.templateLayoutFactory.createClass(
+          '<div class="balloon-top">$[properties.address]</div><div class="balloon-bottom">$[properties.hours]</div>', {
+            build: function () {
+                // Сначала вызываем метод build родительского класса.
+                MyBalloonContentLayoutClass.superclass.build.call(this);
+                // А затем выполняем дополнительные действия.
+            },
+
+            // Аналогично переопределяем функцию clear, чтобы снять
+            // прослушивание клика при удалении макета с карты.
+            clear: function () {
+                // Выполняем действия в обратном порядке - сначала снимаем слушателя,
+                // а потом вызываем метод clear родительского класса.
+                MyBalloonContentLayoutClass.superclass.clear.call(this);
+            }
+          }
+      );
+      
       // Создаем нужное количество меток
       for (var i = 0; i < number; i++) {
           // Генерируем координаты метки случайным образом.
@@ -483,16 +506,26 @@ function mapInit () {
           if (lat >= bounds[0][0] && lat <= bounds[1][0] && lng >= bounds[0][1] && lng <= bounds[1][1]) {
             coordinates = [lat, lng];
             myPlacemark = new ymaps.Placemark(coordinates, {
-              // Чтобы балун и хинт открывались на метке, необходимо задать ей определенные свойства.
-              balloonContentBody: stores[i].address,
-              balloonContentFooter: stores[i].openingHours},{
+              address: stores[i].address,
+              hours: stores[i].openingHours
+            },
+            {
               iconImageHref: '../images/map-pin.png',
               // Размеры метки.
               iconImageSize: [24, 40],
               // Смещение левого верхнего угла иконки относительно
               // её "ножки" (точки привязки).
-              iconImageOffset: [-12, -40]
-            });
+              iconImageOffset: [-12, -40],
+              balloonContentLayout: MyBalloonContentLayoutClass,
+              hasHint: false,
+              hasBalloon: true,
+              draggable: false,
+              balloonAutoPan : true,
+              balloonHasCloseButton: false,
+              balloonShadow : false
+
+            }
+            );
             placemarks.push(myPlacemark);
           }
           
@@ -565,8 +598,8 @@ function mapInit () {
       var searchLat = firstGeoObject.geometry._ti[0];
       var searchLng = firstGeoObject.geometry._ti[1];
       
-      myMap.setCenter([searchLat, searchLng],11);
-      myMap.container.fitToViewport()
+      myMap.setCenter([searchLat, searchLng]);
+      myMap.container.fitToViewport();
       
       removeMarkers();
       
@@ -577,6 +610,11 @@ function mapInit () {
       
       findNearest(searchCoords);
       
+      if ($(".autocomplete").css("display") == "block") {
+        myMap.setZoom(16);
+        myMap.container.fitToViewport();
+        $(".autocomplete").hide();
+      }
       
     }, function (err) {
         // Если геокодирование не удалось, сообщаем об ошибке.
@@ -597,8 +635,141 @@ function mapInit () {
     }
   });
   
+  // Автозаполнение формы поиска
+  
+  $("#searchInput").keydown(function(e) {
+  
+    if(window.event) { keynum = e.keyCode; }  // IE (sucks)
+    else if(e.which) { keynum = e.which; }
+    
+    if (keynum == 40) {
+      acDown();
+    } else if (keynum == 38) {
+      acUp();
+    } else if  (keynum == 13) {
+      acSelect();
+    } else if ((keynum != 37) // Left
+                || (keynum != 39) // Right
+                || (keynum != 40 || keynum != 38)// && (document.getElementById('ulSuggestList').style.display != 'none')) // Down or Up
+                || (keynum != 20) // Caps Lock
+                || (keynum != 9)  // Tab
+                || (keynum != 17) // Ctrl up
+                || (keynum != 33) // Page up
+                || (keynum != 34) // Page down
+                || (keynum != 35) // End
+                || (keynum != 36) // Home
+                || (keynum != 45) // Insert
+                || (keynum != 145)
+                || (keynum != 144)
+                || (keynum != 19) // Pause
+                || (keynum != 123) // F12
+                || (keynum != 122) // F11
+                || (keynum != 121) // F10
+                || (keynum != 120) // F9
+                || (keynum != 119) // F8
+                || (keynum != 118) // F7
+                || (keynum != 117) // F6
+                || (keynum != 116) // F5
+                || (keynum != 115) // F4
+                || (keynum != 114) // F3
+                || (keynum != 113) // F2
+                || (keynum != 112) // F1
+                || (keynum != 219)
+                || (keynum != 0)
+    ) {
+    
+      var val = $(this).val();
+      var acresults = new Array();
+      for (i in stores) {
+        address = stores[i].address;
+        if (address.toLowerCase().indexOf(val.toLowerCase()) != -1 && val !="" && acresults.length < 11) {
+          acresults.push(stores[i].address.replace(" г,",","));
+        }
+      }
+      
+      if (!$(".autocomplete").length && acresults.length) {
+        $("body").append("<ul class='autocomplete' />");
+        $(".autocomplete").css("left",$("#searchInput").offset().left).css("top",$("#searchInput").offset().top + 31);
+      } else {
+        $(".autocomplete").html("").hide();
+      }
+      
+      if (acresults.length) {
+        $(".autocomplete").show().css("left",$("#searchInput").offset().left).css("top",$("#searchInput").offset().top + 31);;
+      }
+      
+      for (i in acresults) {
+        $(".autocomplete").append("<li><span>" + acresults[i] + "</span></li>");
+      }
+      
+      $(".autocomplete li").hover(function() {
+        $(".autocomplete li").removeClass("act");
+        $(this).addClass("act");
+      });
+      
+      $(".autocomplete").bind("mouseleave",function() {
+        var acT = setTimeout(function() {
+          $(".autocomplete").hide();
+        },500);
+      });
+      
+      $(".autocomplete span").click(function() {
+        acSelect();
+        $("#searchForm").submit();
+      });
+      
+    }
+    
+  });
+  
+  function acDown() {
+    if ($(".autocomplete li").length) {
+      var items = $(".autocomplete li");
+      if (!$(".autocomplete .act").length) {
+        items.eq(0).addClass("act");
+      } else {
+        actItem = $(".autocomplete .act");
+        if (actItem.index() < items.length - 1) {
+          actItem.next("li").addClass("act");
+          actItem.removeClass("act");
+        } else {
+          actItem.removeClass("act");
+          items.eq(0).addClass("act");
+        }
+      }
+    }
+  }
+
+  function acUp() {
+    if ($(".autocomplete li").length) {
+      var items = $(".autocomplete li");
+      if (!$(".autocomplete .act").length) {
+        items.eq(items.length - 1).addClass("act");
+      } else {
+        actItem = $(".autocomplete .act");
+        if (actItem.index() > 0) {
+          actItem.prev("li").addClass("act");
+          actItem.removeClass("act");
+        } else {
+          actItem.removeClass("act");
+          items.eq(items.length - 1).addClass("act");
+        }
+      }
+    }
+  }
+
+  function acSelect() {
+    if ($(".autocomplete .act").length) {
+      $("#searchInput").val($(".autocomplete .act span").html());
+    } else {
+      $("#searchForm").submit();
+    }
+  }
+  
   
 }
+
+
 
 jQuery.extend({
     getValues: function(url) {
@@ -705,7 +876,7 @@ function sliderAnimation(slideNum) {
     var t11 = setTimeout(function() {
       notebook.css("left",500 + $(".main-slider").width() - notebook.width()).show().stop().transition({
         left:490
-      },1500,'easeInOutSine');
+      },1100,'easeInOutSine');
       
       /*543,-3*/
       
@@ -715,7 +886,7 @@ function sliderAnimation(slideNum) {
       cursor.css("left",$(".main-slider").offset().left + $(".main-slider").width()).css("top",-230).show().stop().transition({
         left:686,
         top:184
-      },1500,'easeInOutSine');
+      },1100,'easeInOutSine');
       
       /*543,-3*/
       
@@ -751,7 +922,7 @@ function sliderAnimation(slideNum) {
     var t21 = setTimeout(function() {
       bag.css("left",500 + $(".main-slider").width() - bag.width()).show().stop().transition({
         left:515
-      },1500,'easeInOutSine');
+      },1100,'easeInOutSine');
       
       /*543,-3*/
       
@@ -761,7 +932,7 @@ function sliderAnimation(slideNum) {
       
       shoes.css("left",-550).show().transition({
         left:460
-      },1800,'easeInOutSine');
+      },1300,'easeInOutSine');
       
       /*543,-3*/
       
@@ -864,7 +1035,7 @@ function sliderAnimation(slideNum) {
     var t41 = setTimeout(function() {
       backpack.css("left",500 + $(".main-slider").width() - backpack.width()).show().stop().transition({
         left:525
-      },1800,"easeInOutSine");
+      },1200,"easeInOutSine");
       
       /*543,-3*/
       
