@@ -163,9 +163,11 @@ h3 {
 }
 
 .body {
-  background:#168694 url(../images/body-bg.jpg) right 0 no-repeat;
+  background:#168694 url(../images/body-bg.jpg) center 0 no-repeat;
   color:#fff;
   padding:115px 0 0 0;
+  width:100%;
+  overflow:hidden;
 }
 
 .main-slider {
@@ -184,6 +186,7 @@ h3 {
   z-index:3;
   width:339px;
   height:229px;
+  display:none;
 }
 
 .main-slider .slide {
@@ -241,7 +244,7 @@ h3 {
   margin:0 0 .7em 0;
   background:url(../images/bullit.png) 0 .5em no-repeat;
   padding:0 0 0 18px;
-  font-family:'FreeSet', sans-serif;
+  font-family:'FreeSetLight', sans-serif;
 }
 
 .main-slider h2 {
@@ -268,6 +271,26 @@ h3 {
   right:38px;
   top:-33px;
   z-index:4;
+}
+
+.main-slider .slider-mask-l {
+  background:url(../images/slider-mask-l.png) 0 0 no-repeat;
+  position:absolute;
+  z-index:50;
+  width:550px;
+  height:424px;
+  left:-550px;
+  top:0;
+}
+
+.main-slider .slider-mask-r {
+  background:url(../images/slider-mask-r.png) 0 0 no-repeat;
+  position:absolute;
+  z-index:50;
+  width:550px;
+  height:394px;
+  right:-550px;
+  top:0;
 }
 
 .hr {
@@ -546,7 +569,7 @@ h3 {
 #slider-cursor {
   width:61px;
   height:100px;
-  z-index:6;
+  z-index:51;
   top:184px;
 }
 

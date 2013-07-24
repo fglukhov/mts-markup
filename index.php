@@ -67,6 +67,13 @@
         <!-- Slider -->
         
         <div class="main-slider slider">
+          <!-- Slider gradient masks -->
+        
+          <div class="slider-mask-l"></div>
+          
+          <div class="slider-mask-r"></div>
+          
+          <!-- Slider gradient masks END -->
           <div class="slide">
             <div class="slide-content">
             	<h2>Лови лавину<br />бонусов</h2>

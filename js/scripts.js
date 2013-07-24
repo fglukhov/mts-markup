@@ -1,16 +1,25 @@
+$(window).load(function(){
+  $(".main-slider").each(function () {
+    $(this).mainSlider();
+  });
+});
+
 $(document).ready(function () {
   
   // $(".form-wrapper").hide();
   // $(".map-content").show();
   // showMap();   
   
+  if (!$.support.transition) {
+    $.fn.transition = $.fn.animate;
+  }
+  
+  
   if ($(".request-form label span").length) {
     $(".request-form label span").textShadow('1px 1px #005568');
   }
   
-  $(".main-slider").each(function () {
-    $(this).mainSlider();
-  });
+  
   
   $("input:submit").each(function () {
     var divBtn = $("<div></div>");
@@ -67,6 +76,7 @@ $(document).ready(function () {
 
 	$("#requestForm").submit(function() {
     if ($("#requestForm").valid()) {
+      $(".loader").show();
       $.ajax({
         type: "POST",
         url: "send.php",
@@ -79,7 +89,7 @@ $(document).ready(function () {
         }).done(function() {
         
         /* Submit message */
-        
+        $(".loader").hide();
         $(".form-wrapper").hide();
         $(".map-content").show();
         
@@ -237,25 +247,23 @@ $(document).ready(function () {
       
       
     }
-    
-    
+  
+  
     /* Card animation */
     
     var card = slider.find($(".card"));
   
-    card.css("left",slider.offset().left + slider.width()).show();
-    
-    card.stop().transition({
+    card.css("left",500 + slider.width() - card.width()).show().transition({
       left:649
-    },1000);
+    },1500);
     
     var slideTtl = slider.find("h2");
     
-    slideTtl.css("position","absolute").css("left",slider.offset().left + slider.width()).show();
+    slideTtl.css("position","absolute").css("left",200 + slider.width()).show();
     
     slideTtl.transition({
       left:0
-    },1200);
+    },1600);
     
   }
   
@@ -658,28 +666,33 @@ function sliderAnimation(slideNum) {
     },1500);
     
     var t02 = setTimeout(function() {
-      coins.css("width",90).css("height",50).css("left",620).css("top",96).css("z-index",1).show().animate({
-        width:[180, 'linear'],
-        height:[100,'linear'],
-        left:[405, 'easeOutCirc'],
-        top:[121,'linear']
-      },800,function() {
-        coins.css("z-index",4);
-        coins.animate({
-          width: [299, 'linear'],
-          height: [166, 'linear'],
-          left: [520, 'easeInQuad'],
-          top:[146, 'linear']
-        },500,function() {
-          coins.animate({
+      coins.css("width",299).css("height",166).css("left",546).css("top",146).css("z-index",4).fadeIn(1000);
+    },2500);
+    
+    // var t02 = setTimeout(function() {
+      // coins.css("width",90).css("height",50).css("left",620).css("top",96).css("z-index",1).show().animate({
+        // width:[180, 'linear'],
+        // height:[100,'linear'],
+        // left:[405, 'easeOutCirc'],
+        // top:[121,'linear']
+      // },800,function() {
+        // coins.css("z-index",4);
+        // coins.animate({
+          // width: [299, 'linear'],
+          // height: [166, 'linear'],
+          // left: [520, 'easeInQuad'],
+          // top:[146, 'linear']
+        // },500,function() {
+          // coins.animate({
             // width: 299,
             // height: 166,
-            left: [546, 'easeOutQuad']
-          },300);
-        });
-      });
+            // left: [546, 'easeOutQuad']
+          // },300);
+        // });
+      // });
       
-    },2500);
+    // },2500);
+    
     //545, 145
     
   }
@@ -690,9 +703,9 @@ function sliderAnimation(slideNum) {
     var cursor = $("#slider-cursor");
     
     var t11 = setTimeout(function() {
-      notebook.css("left",$(".main-slider").offset().left + $(".main-slider").width()).show().stop().transition({
+      notebook.css("left",500 + $(".main-slider").width() - notebook.width()).show().stop().transition({
         left:490
-      },1000,'easeInOutSine');
+      },1500,'easeInOutSine');
       
       /*543,-3*/
       
@@ -701,8 +714,8 @@ function sliderAnimation(slideNum) {
     var t12 = setTimeout(function() {
       cursor.css("left",$(".main-slider").offset().left + $(".main-slider").width()).css("top",-230).show().stop().transition({
         left:686,
-        top:184,
-      },1000,'easeInOutSine');
+        top:184
+      },1500,'easeInOutSine');
       
       /*543,-3*/
       
@@ -713,14 +726,14 @@ function sliderAnimation(slideNum) {
         width:55,
         height:90
       },50);
-    },2500);
+    },2900);
     
     var t14 = setTimeout(function() {
       cursor.stop().animate({
         width:61,
         height:100
       },50);
-    },2600);
+    },3000);
     
       /*543,-3*/
       
@@ -736,9 +749,9 @@ function sliderAnimation(slideNum) {
     var scarf = $("#slider-scarf");
     
     var t21 = setTimeout(function() {
-      bag.css("left",$(".main-slider").offset().left + $(".main-slider").width()).show().stop().transition({
+      bag.css("left",500 + $(".main-slider").width() - bag.width()).show().stop().transition({
         left:515
-      },1000,'easeInOutSine');
+      },1500,'easeInOutSine');
       
       /*543,-3*/
       
@@ -746,9 +759,9 @@ function sliderAnimation(slideNum) {
     
     var t22 = setTimeout(function() {
       
-      shoes.css("left",-$(".main-slider").offset().left - shoes.width()).show().transition({
+      shoes.css("left",-550).show().transition({
         left:460
-      },1400,'easeInOutSine');
+      },1800,'easeInOutSine');
       
       /*543,-3*/
       
@@ -849,9 +862,9 @@ function sliderAnimation(slideNum) {
     var backpack = $("#slider-backpack");
     
     var t41 = setTimeout(function() {
-      backpack.css("left",$(".main-slider").offset().left + $(".main-slider").width()).show().stop().transition({
+      backpack.css("left",500 + $(".main-slider").width() - backpack.width()).show().stop().transition({
         left:525
-      },1200,"easeInOutSine");
+      },1800,"easeInOutSine");
       
       /*543,-3*/
       
