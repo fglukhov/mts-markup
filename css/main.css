@@ -81,6 +81,11 @@ body {
   color:#606060;
 }
 
+#footer a,
+#footer a:visited {
+  color:#1fa2b2;
+}
+
 .footer-content {
   background:url(../images/support.jpg) 0 12px no-repeat;
   padding:55px 0 30px 160px;
@@ -165,7 +170,7 @@ h3 {
 .body {
   background:#168694 url(../images/body-bg.jpg) center 0 no-repeat;
   color:#fff;
-  padding:115px 0 0 0;
+  padding:10px 0 0 0;
   width:100%;
   overflow:hidden;
 }
@@ -256,6 +261,7 @@ h3 {
   width:650px;
   position:absolute;
   top:0;
+  font-family:'FreeSetLight', sans-serif;
 }
 
 .main-slider .slide-content {
@@ -296,20 +302,21 @@ h3 {
 .hr {
   height:2px;
   background-color:#178e9d;
-  margin:12px 0 35px 0;
+  margin:12px 0 30px 0;
 }
 
 .form-descr {
   float:left;
   width:500px;
-  font-size:18px;
-  padding-top:13px;
+  font-size:17px;
+  padding-top:20px;
+  line-height:21px;
 }
 
 .form-descr .item {
   position:relative;
-  padding:9px 0 0 114px;
-  margin:0 0 20px 0;
+  padding:15px 0 0 114px;
+  margin:0 0 15px 0;
   min-height:53px;
   background-position:46px center;
   background-repeat:no-repeat;
@@ -342,7 +349,7 @@ h3 {
 }
 
 .common-form .form-item {
-  margin:0 0 16px 0;
+  margin:0 0 11px 0;
   position:relative;
 }
 
