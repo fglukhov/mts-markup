@@ -2,12 +2,14 @@
 <html>
 <head>
 <title>МТС Банк</title>
-<meta name="viewport" content="width=1020">
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 <meta content="text/html; charset=UTF-8" http-equiv="content-type">
 <link rel="stylesheet" type="text/css" href="css/reset-min.css" media="screen"/>
 <link rel="stylesheet" type="text/css" href="css/fonts-min.css" media="screen"/>
 <link rel="stylesheet" type="text/css" href="css/main.css" media="screen"/>
+<link rel="stylesheet" media="screen and (max-width: 1030px)" href="css/medium.css" />
+<link rel="stylesheet" media="screen and (max-width: 650px)" href="css/narrow.css" />
 <link rel="stylesheet" type="text/css" href="css/print.css" media="print"/>
 <!--[if lte IE 8]>
   <link rel="stylesheet" type="text/css" href="css/ie7-8.css" media="screen"/>
@@ -24,7 +26,23 @@
 <script type="text/javascript" src="js/bgpos.js"></script>
 <script type="text/javascript" src="js/scripts.js"></script>
 
-
+<script type="text/javascript">
+  $(window).bind("load resize",function() {
+    if ($(window).width() < 600) {
+      $('meta[name=viewport]').attr('content','width=device-width,initial-scale=0.5,maximum-scale=0.5');
+    } else {
+    
+      if(window.innerHeight > window.innerWidth){
+        $('meta[name=viewport]').attr('content','width=device-height,initial-scale=0.75,maximum-scale=0.75');
+      } else {
+        $('meta[name=viewport]').attr('content','width=device-width,initial-scale=1');
+      }
+    }
+  });
+  
+  
+  
+</script>
 
 </head>
 
@@ -162,6 +180,8 @@
       
       <div class="hr"></div>
       
+      <div class="money-btn"></div>
+      
       <div class="section-wrapper form-section">
       
         <!-- Slider END -->
@@ -170,16 +190,16 @@
         
           <div class="form-descr">
           
-            <div class="item" style="background-image:url(images/ico-time.png)">
-              получение за 30 минут<br />в любом салоне МТС
+            <div class="item item-1">
+              получение за 30 минут в любом салоне МТС
             </div>
             
-            <div class="item" style="background-image:url(images/ico-passport.png)">
-              для получения нужен<br />только паспорт
+            <div class="item item-2">
+              для получения нужен только паспорт
             </div>
             
-            <div class="item" style="background-image:url(images/ico-map.png)">
-              погашение и обслуживание<br />в любом из 3000 салонов МТС<br />более, чем в 980 городах
+            <div class="item item-3">
+              погашение и обслуживание в любом из 3000 салонов МТС более, чем в 980 городах
             </div>
             
           </div>
@@ -202,7 +222,7 @@
                 <label for="request_phone"><span>Контактный телефон</span></label>
                 <input type="text" class="form-text" name="request_phone" id="request_phone" required />
               </div>
-              <input type="submit" value="Оформить заявку" class="form-submit"/>
+              <input type="submit" value="Получить МТС Деньги" class="form-submit"/>
             </form>
           </div>
           
@@ -213,7 +233,7 @@
         <div class="map-content fc">
           
           <div class="map-wrapper">
-          	<div id="map" style="width: 486px; height: 304px"></div>
+          	<div id="map"></div>
           </div>
           
           <div class="map-search">
@@ -264,7 +284,7 @@
     <div class="footer-content">
       	<h3>Возникли вопросы?</h3>
       	<p>
-      	  Подробную информацию об универсальной банковской карте «МТС Деньги»<br />
+      	  Подробную информацию об универсальной банковской карте «МТС Деньги» 
       	  вы можете получить по телефону 8 800 250 08 90 или в разделе <a href="http://www.mts.ru/bank_service/mts_dengi/tariff_condition/">Тарифы и условия</a>.
       	</p>
       	<div class="footer-bottom">

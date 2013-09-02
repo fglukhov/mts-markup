@@ -6,9 +6,20 @@ $(window).load(function(){
 
 $(window).resize(function() {
   $(".autocomplete").css("left",$("#searchInput").offset().left).css("top",$("#searchInput").offset().top + 31);
+  if ($(window).width() < 650) {
+    $("body").addClass("body-narrow")
+  } else {
+    $("body").removeClass("body-narrow")
+  }
 });
 
 $(document).ready(function () {
+
+  $(".money-btn").click(function() {
+    $("html,body").animate({
+      scrollTop: 910
+    });
+  })
   
   // $(".form-wrapper").hide();
   // $(".map-content").show();
@@ -170,7 +181,7 @@ $(document).ready(function () {
         } else {
           listerItems.eq(0).click();
         }
-      }, 10000);
+      }, 1000000);
       
       listerItems.on("click",function () {
         slides.find(".slide-content").hide();
@@ -255,8 +266,8 @@ $(document).ready(function () {
     
     var card = slider.find($(".card"));
   
-    card.css("left",500 + slider.width() - card.width()).show().transition({
-      left:649
+    card.css("left",500 + slider.width()).show().transition({
+      left:586
     },1000);
     
     var slideTtl = slider.find("h2");
@@ -595,8 +606,8 @@ function mapInit () {
       }
       
       
-      var searchLat = firstGeoObject.geometry._ti[0];
-      var searchLng = firstGeoObject.geometry._ti[1];
+      var searchLat = firstGeoObject.geometry.getCoordinates()[0];
+      var searchLng = firstGeoObject.geometry.getCoordinates()[1];
       
       myMap.setCenter([searchLat, searchLng]);
       myMap.container.fitToViewport();
@@ -769,8 +780,6 @@ function mapInit () {
   
 }
 
-
-
 jQuery.extend({
     getValues: function(url) {
         var result = null;
@@ -820,9 +829,9 @@ function sliderAnimation(slideNum) {
     var t01 = setTimeout(function() {
     
     
-      box.css("left",640).css("top",44).show().stop().animate({
-        left: 546,
-        top: 49
+      box.css("left",580).css("top",44).show().stop().animate({
+        left: 490,
+        top: 52
       },450);
       
       $({deg: 20}).animate({deg: 0}, {
@@ -837,7 +846,7 @@ function sliderAnimation(slideNum) {
     },1500);
     
     var t02 = setTimeout(function() {
-      coins.css("width",299).css("height",166).css("left",546).css("top",146).css("z-index",4).fadeIn(1000);
+      coins.css("width",299).css("height",166).css("left",477).css("top",131).css("z-index",4).fadeIn(1000);
     },2500);
     
     // var t02 = setTimeout(function() {
@@ -875,7 +884,7 @@ function sliderAnimation(slideNum) {
     
     var t11 = setTimeout(function() {
       notebook.css("left",500 + $(".main-slider").width() - notebook.width()).show().stop().transition({
-        left:490
+        left:441
       },1100,'easeInOutSine');
       
       /*543,-3*/
@@ -883,9 +892,9 @@ function sliderAnimation(slideNum) {
     },300);
     
     var t12 = setTimeout(function() {
-      cursor.css("left",$(".main-slider").offset().left + $(".main-slider").width()).css("top",-230).show().stop().transition({
-        left:686,
-        top:184
+      cursor.css("left",$(".section-wrapper").eq(0).offset().left + $(".main-slider").width()).css("top",-230).show().stop().transition({
+        left:622,
+        top:170
       },1100,'easeInOutSine');
       
       /*543,-3*/
@@ -921,7 +930,7 @@ function sliderAnimation(slideNum) {
     
     var t21 = setTimeout(function() {
       bag.css("left",500 + $(".main-slider").width() - bag.width()).show().stop().transition({
-        left:515
+        left:465
       },1100,'easeInOutSine');
       
       /*543,-3*/
@@ -931,7 +940,7 @@ function sliderAnimation(slideNum) {
     var t22 = setTimeout(function() {
       
       shoes.css("left",-550).show().transition({
-        left:460
+        left:409
       },1300,'easeInOutSine');
       
       /*543,-3*/
@@ -962,11 +971,11 @@ function sliderAnimation(slideNum) {
     //
     
     var t31 = setTimeout(function() {
-      phone.css("left",613).css("top",165).css("width",10).css("height",10).show().stop().transition({
-        width:141,
-        height:327,
-        left:543,
-        top:-3
+      phone.css("left",489).css("top",165).css("width",10).css("height",10).show().stop().transition({
+        width:129,
+        height:299,
+        left:489,
+        top:0
       },500);
       
       /*543,-3*/
@@ -975,10 +984,10 @@ function sliderAnimation(slideNum) {
     
     var t32 = setTimeout(function() {
       paypass.css("left",727).css("top",213).css("width",10).css("height",10).show().stop().transition({
-        width:155,
-        height:162,
-        left:655,
-        top:131
+        width:141,
+        height:147,
+        left:588,
+        top:126
       },500,function() {
         $("#slider-lamps").show();
         lamp.eq(0).fadeIn(50).delay(150).fadeOut(50).delay(1500).fadeIn(50).delay(150).fadeOut(50);
@@ -1034,7 +1043,7 @@ function sliderAnimation(slideNum) {
     
     var t41 = setTimeout(function() {
       backpack.css("left",500 + $(".main-slider").width() - backpack.width()).show().stop().transition({
-        left:525
+        left:454
       },1200,"easeInOutSine");
       
       /*543,-3*/
